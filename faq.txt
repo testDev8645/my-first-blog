@@ -1,0 +1,85 @@
+INSTALLING:
+	1. python
+	2. create proj dir
+	3. create venv (python -m venv [name])
+	4. activate venv (venv/scripts/activate
+	5. upgrate pip (python -m pip install --upgrade pip)
+	6. create requirements.txt () 
+	7. install django
+	8. install git
+	9. create GutHub acc
+	10. create PythonAnywhere acc
+	11. install password manager
+	12. cmd | bash:
+		1. whoami (comp name)
+		2. cd | pwd (this dir)
+		3. cd [path] (change dir)
+		4. cd .. (change path to parent dir)
+		5. dir | ls (list of dirs)
+		6. mkdir (create dir)
+		7. rmdir /S [dir_name] | rm -r [dir_name] (delete dir with files)
+		8. rmdir (del) | rm (delete file)
+		9. copy [path off] [path to] | cp [path off] [path to] (copy file or dir)
+		10. move [path off] [path to] | mv [path off] [path to] (move file or dir to another place)
+		11. /? | man (help)
+		12. exit 
+
+Git:
+git init
+git config --global user.name "Your Name"
+git config --global user.email you@example.com
+git config --global --unset-all user.name
+git config --list
+git status
+git add --all
+git commit -m "django proj"
+git remote add origin https://github.com/<your-github-username>/my-first-blog.git
+git push -u origin master
+with different accs delete credentials
+
+pythonanywhere:
+pip3.6 install --user pythonanywhere
+pa_autoconfigure_django.py https://github.com/<your-github-username>/my-first-blog.git
+
+DJANGO:
+django-admin startproject [name]
+python manage.py startapp [name]
+python manage.py createsuperuser
+
+
+========
+.models
+========
+from django.conf import settings
+from django.db import models
+from django.utils import timezone
+
+
+class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    published_date = models.DateTimeField(blank=True, null=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
+
+=======
+.admin
+=======
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+
+======
+.urls
+======
+from django.urls import path
+from . import views
+
