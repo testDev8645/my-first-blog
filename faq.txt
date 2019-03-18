@@ -47,39 +47,25 @@ python manage.py startapp [name]
 python manage.py createsuperuser
 
 
-========
-.models
-========
+.conf
 from django.conf import settings
+
+.db
 from django.db import models
+
+.utils
 from django.utils import timezone
 
-
-class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
-
-    def __str__(self):
-        return self.title
-
-=======
-.admin
-=======
-from django.contrib import admin
-from .models import Post
-
-admin.site.register(Post)
-
-======
 .urls
-======
 from django.urls import path
-from . import views
 
+.contrib
+from django.contrib import admin
+from django.contrib.auth.models import User
+
+orm:
+	model.objects.filter([field_name]='n') - фильтрация осуществляется через присваивание.
+    [field_name]__contains - Contains действует как regExp
+    [field_name]__lte - меньше
+    model.objects.order_by([field_name]) - asc
+    model.objects.order_by([-field_name]) - desc
